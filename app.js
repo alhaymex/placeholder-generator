@@ -1,58 +1,90 @@
 const express = require("express");
-const sharp = require("sharp");
-
 const app = express();
-const PORT = process.env.PORT || 8080;
 
-app.get("/", async (req, res) => {
-  const { width = 1200, height = 1200 } = req.query;
+const baseColor = "#F0F8FF";
+const strokeColor = "#CCDDEE";
 
-  const imgWidth = parseInt(width);
-  const imgHeight = parseInt(height);
+app.get("/", (req, res) => {
+  const width = req.query.width || 1200;
+  const height = req.query.height || 1200;
+  const shape = req.query.shape || "circle";
 
-  if (isNaN(imgWidth) || isNaN(imgHeight) || imgWidth <= 0 || imgHeight <= 0) {
-    return res.status(400).send("Invalid width or height");
+  let svgContent = "";
+
+  if (shape === "circle") {
+    svgContent = generateCircleSVG(width, height);
+  } else if (shape === "square") {
+    svgContent = generateSquareSVG(width, height);
+  } else if (shape === "diamond") {
+    svgContent = generateDiamondSVG(width, height);
+  } else {
+    svgContent = generateCircleSVG(width, height);
   }
 
-  try {
-    const centerX = imgWidth / 2;
-    const centerY = imgHeight / 2;
-
-    const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="${imgWidth}" height="${imgHeight}" fill="none">
-            <!-- Background -->
-            <rect width="${imgWidth}" height="${imgHeight}" fill="#EAEAEA" rx="3"/>
-
-            <!-- Shapes -->
-            <g opacity=".5">
-                <circle cx="${centerX}" cy="${centerY}" r="${
-      Math.min(imgWidth, imgHeight) / 4
-    }" fill="#FAFAFA" />
-                <circle cx="${centerX}" cy="${centerY}" r="${
-      Math.min(imgWidth, imgHeight) / 4
-    }" stroke="#C9C9C9" stroke-width="2.418" fill="none" />
-                <circle cx="${centerX}" cy="${centerY}" r="${
-      Math.min(imgWidth, imgHeight) / 8
-    }" fill="#FFFFFF" stroke="#C9C9C9" stroke-width="2.418" />
-
-                <!-- Smaller inner circle -->
-                <circle cx="${centerX}" cy="${centerY}" r="${
-      Math.min(imgWidth, imgHeight) / 16
-    }" fill="#666" />
-            </g>
-        </svg>
-        `;
-
-    const imageBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
-
-    res.set("Content-Type", "image/png");
-    res.send(imageBuffer);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error generating the image");
-  }
+  res.header("Content-Type", "image/svg+xml");
+  res.send(svgContent);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at port: ${PORT}`);
+function generateCircleSVG(width, height) {
+  const radius = Math.min(width, height) / 4; // Proportional radius
+  const cx = width / 2; // Center X
+  const cy = height / 2; // Center Y
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${baseColor}" />
+          <stop offset="100%" stop-color="${baseColor + "40"}" />
+        </linearGradient>
+      </defs>
+      <rect width="${width}" height="${height}" fill="url(#gradient)" rx="5"/>
+      <g opacity=".7">
+        <path stroke="${strokeColor}" stroke-width="1.2" fill="none" 
+              d="M${cx} ${cy - radius} 
+                 A${radius} ${radius} 0 1 1 ${cx} ${cy + radius} 
+                 A${radius} ${radius} 0 1 1 ${cx} ${cy - radius}Z"/>
+      </g>
+    </svg>
+  `;
+}
+
+function generateSquareSVG(width, height) {
+  const size = Math.min(width, height) / 2;
+  const x = (width - size) / 2;
+  const y = (height - size) / 2;
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" fill="none">
+      <rect width="${width}" height="${height}" fill="${baseColor}" rx="3"/>
+      <g opacity=".5">
+        <rect x="${x}" y="${y}" width="${size}" height="${size}" fill="${baseColor}" />
+        <rect x="${x}" y="${y}" width="${size}" height="${size}" stroke="${strokeColor}" stroke-width="2.418"/>
+      </g>
+    </svg>
+  `;
+}
+
+function generateDiamondSVG(width, height) {
+  const size = Math.min(width, height) / 2;
+  const cx = width / 2;
+  const cy = height / 2;
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" fill="none">
+      <rect width="${width}" height="${height}" fill="${baseColor}" rx="3"/>
+      <g opacity=".5">
+        <polygon points="${cx},${cy - size} ${cx + size},${cy} ${cx},${
+    cy + size
+  } ${cx - size},${cy}" fill="${baseColor}"/>
+        <polygon points="${cx},${cy - size} ${cx + size},${cy} ${cx},${
+    cy + size
+  } ${cx - size},${cy}" stroke="${strokeColor}" stroke-width="2.418"/>
+      </g>
+    </svg>
+  `;
+}
+
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000");
 });

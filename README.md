@@ -1,4 +1,4 @@
-# **image-placeholder-generator**
+# **placeholder-generator**
 
 A simple REST API for generating dynamic placeholder images. Perfect for filling in missing images on websites with customizable width, height, and a \"No Image\" label at the center.
 
@@ -27,13 +27,13 @@ A simple REST API for generating dynamic placeholder images. Perfect for filling
 
 2. Install the dependencies:
 
-   ```bash
+   ```
    npm install
    ```
 
 3. Start the server:
 
-   ```bash
+   ```
    npm start
    ```
 
@@ -59,6 +59,7 @@ Generates a placeholder image in PNG format.
 
 - `width` (optional) - Width of the image (default: `1200`)
 - `height` (optional) - Height of the image (default: `1200`)
+- `shape` (optional) - Shape of the image (default: `circle`)
 
 #### **Response:**
 
@@ -75,8 +76,12 @@ Generates a placeholder image in PNG format.
    ```
 
 2. **Custom width and height (1600x800):**
+
    ```
    https://image.alhaymex.com?width=1600&height=800
    ```
 
----
+3. **Custom shape (circle, square, and diamond):**
+   ```
+   https://image.alhaymex.com?shape=diamond
+   ```

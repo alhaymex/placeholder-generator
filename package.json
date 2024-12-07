@@ -1,5 +1,5 @@
 {
-  "name": "image-placeholder-generator",
+  "name": "placeholder-generator",
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
