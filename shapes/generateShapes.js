@@ -1,7 +1,7 @@
 const baseColor = "#F0F8FF";
 const strokeColor = "#CCDDEE";
 
-export function generateCircleSVG(width, height) {
+function generateCircleSVG(width, height) {
   const radius = Math.min(width, height) / 4;
   const cx = width / 2;
   const cy = height / 2;
@@ -25,7 +25,7 @@ export function generateCircleSVG(width, height) {
   `;
 }
 
-export function generateDiamondSVG(width, height) {
+function generateDiamondSVG(width, height) {
   const size = Math.min(width, height) / 2;
   const cx = width / 2;
   const cy = height / 2;
@@ -45,7 +45,7 @@ export function generateDiamondSVG(width, height) {
   `;
 }
 
-export function generateGridSVG(width, height) {
+function generateGridSVG(width, height) {
   const gridSpacing = 50;
 
   const verticalLines = Math.floor(width / gridSpacing);
@@ -77,7 +77,7 @@ export function generateGridSVG(width, height) {
   `;
 }
 
-export function generateTriangleSVG(width, height) {
+function generateTriangleSVG(width, height) {
   const size = Math.min(width, height) / 3;
   const cx = width / 2;
   const cy = height / 2;
@@ -95,7 +95,7 @@ export function generateTriangleSVG(width, height) {
   `;
 }
 
-export function generateStarSVG(width, height) {
+function generateStarSVG(width, height) {
   const cx = width / 2;
   const cy = height / 2;
   const outerRadius = Math.min(width, height) / 3;
@@ -124,7 +124,7 @@ export function generateStarSVG(width, height) {
   `;
 }
 
-export function generateHexagonSVG(width, height) {
+function generateHexagonSVG(width, height) {
   const radius = Math.min(width, height) / 3;
   const cx = width / 2;
   const cy = height / 2;
@@ -148,7 +148,7 @@ export function generateHexagonSVG(width, height) {
   `;
 }
 
-export function generateSquareSVG(width, height) {
+function generateSquareSVG(width, height) {
   const size = Math.min(width, height) / 3;
   const cx = width / 2;
   const cy = height / 2;
@@ -169,7 +169,7 @@ export function generateSquareSVG(width, height) {
   `;
 }
 
-export function generateWaveSVG(width, height) {
+function generateWaveSVG(width, height) {
   const waveHeight = Math.min(width, height) / 6;
   const waveLength = width / 2;
   const cy = height / 2;
@@ -190,7 +190,7 @@ export function generateWaveSVG(width, height) {
   `;
 }
 
-export function generatePentagonSVG(width, height) {
+function generatePentagonSVG(width, height) {
   const size = Math.min(width, height) / 3;
   const cx = width / 2;
   const cy = height / 2;
@@ -213,3 +213,15 @@ export function generatePentagonSVG(width, height) {
     </svg>
   `;
 }
+
+module.exports = {
+  generateCircleSVG,
+  generateSquareSVG,
+  generateDiamondSVG,
+  generateGridSVG,
+  generateTriangleSVG,
+  generateStarSVG,
+  generateHexagonSVG,
+  generateWaveSVG,
+  generatePentagonSVG,
+};
