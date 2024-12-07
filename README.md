@@ -84,18 +84,18 @@ Generates a profile image using the initials PNG format.
 1. **Default size (1200x1200):**
 
    ```
-   https://image.alhaymex.com
+   https://image.alhaymex.com/placeholder
    ```
 
 2. **Custom width and height (1600x800):**
 
    ```
-   https://image.alhaymex.com?width=1600&height=800
+   https://image.alhaymex.com/placeholder?width=1600&height=800
    ```
 
 3. **Custom shapes (circle, square, diamond, triangle, grid, star, pentagon, hexagon, and wave):**
    ```
-   https://image.alhaymex.com?shape=grid
+   https://image.alhaymex.com/placeholder?shape=grid
    ```
 4. **Generate a profile image with initials "AY":**
    ```
