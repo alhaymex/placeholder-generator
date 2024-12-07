@@ -7,9 +7,6 @@ const {
   generateTriangleSVG,
   generateStarSVG,
   generateHexagonSVG,
-  generateHeartSVG,
-  generateArrowSVG,
-  generateCrossSVG,
   generateWaveSVG,
   generatePentagonSVG,
 } = require("./shapes/generateShapes");
