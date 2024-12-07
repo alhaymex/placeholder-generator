@@ -17,6 +17,8 @@ app.get("/", (req, res) => {
     svgContent = generateSquareSVG(width, height);
   } else if (shape === "diamond") {
     svgContent = generateDiamondSVG(width, height);
+  } else if (shape === "grid") {
+    svgContent = generateGridSVG(width, height);
   } else {
     svgContent = generateCircleSVG(width, height);
   }
@@ -80,6 +82,40 @@ function generateDiamondSVG(width, height) {
         <polygon points="${cx},${cy - size} ${cx + size},${cy} ${cx},${
     cy + size
   } ${cx - size},${cy}" stroke="${strokeColor}" stroke-width="2.418"/>
+      </g>
+    </svg>
+  `;
+}
+
+function generateGridSVG(width, height) {
+  const gridSpacing = 50; // Distance between grid lines
+
+  // Define the number of lines based on width and height
+  const verticalLines = Math.floor(width / gridSpacing);
+  const horizontalLines = Math.floor(height / gridSpacing);
+
+  // Create the grid lines
+  let gridLines = "";
+  for (let i = 0; i <= verticalLines; i++) {
+    const xPos = i * gridSpacing;
+    gridLines += `<line x1="${xPos}" y1="0" x2="${xPos}" y2="${height}" stroke="${strokeColor}" stroke-width="0.8"/>`;
+  }
+  for (let i = 0; i <= horizontalLines; i++) {
+    const yPos = i * gridSpacing;
+    gridLines += `<line x1="0" y1="${yPos}" x2="${width}" y2="${yPos}" stroke="${strokeColor}" stroke-width="0.8"/>`;
+  }
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
+      <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${baseColor}" />
+          <stop offset="100%" stop-color="${baseColor + "40"}" />
+        </linearGradient>
+      </defs>
+      <rect width="${width}" height="${height}" fill="url(#gradient)" rx="5"/>
+      <g opacity=".5">
+        ${gridLines}
       </g>
     </svg>
   `;
