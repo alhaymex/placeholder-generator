@@ -81,7 +81,7 @@ Generates a placeholder image in PNG format.
    https://image.alhaymex.com?width=1600&height=800
    ```
 
-3. **Custom shape (circle, square, diamond, and grid):**
+3. **Custom shapes (circle, square, diamond, triangle, andgrid):**
    ```
    https://image.alhaymex.com?shape=diamond
    ```

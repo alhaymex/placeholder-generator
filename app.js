@@ -19,6 +19,8 @@ app.get("/", (req, res) => {
     svgContent = generateDiamondSVG(width, height);
   } else if (shape === "grid") {
     svgContent = generateGridSVG(width, height);
+  } else if (shape === "triangle") {
+    svgContent = generateTriangleSVG(width, height);
   } else {
     svgContent = generateCircleSVG(width, height);
   }
@@ -88,13 +90,11 @@ function generateDiamondSVG(width, height) {
 }
 
 function generateGridSVG(width, height) {
-  const gridSpacing = 50; // Distance between grid lines
+  const gridSpacing = 50;
 
-  // Define the number of lines based on width and height
   const verticalLines = Math.floor(width / gridSpacing);
   const horizontalLines = Math.floor(height / gridSpacing);
 
-  // Create the grid lines
   let gridLines = "";
   for (let i = 0; i <= verticalLines; i++) {
     const xPos = i * gridSpacing;
@@ -116,6 +116,24 @@ function generateGridSVG(width, height) {
       <rect width="${width}" height="${height}" fill="url(#gradient)" rx="5"/>
       <g opacity=".5">
         ${gridLines}
+      </g>
+    </svg>
+  `;
+}
+
+function generateTriangleSVG(width, height) {
+  const size = Math.min(width, height) / 3;
+  const cx = width / 2;
+  const cy = height / 2;
+  const points = `${cx},${cy - size} ${cx - size},${cy + size} ${cx + size},${
+    cy + size
+  }`;
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" fill="none">
+      <rect width="${width}" height="${height}" fill="${baseColor}" rx="3"/>
+      <g opacity=".5">
+        <polygon points="${points}" fill="${baseColor}" stroke="${strokeColor}" stroke-width="2"/>
       </g>
     </svg>
   `;
