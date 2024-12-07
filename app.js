@@ -9,11 +9,14 @@ const {
   generateHexagonSVG,
   generateWaveSVG,
   generatePentagonSVG,
-} = require("./shapes/generateShapes");
+} = require("./lib/shapes/generateShapes");
+const {
+  generateInitialsProfileImageSVG,
+} = require("./lib/profile/generateProfileImages");
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/placeholder", (req, res) => {
   const width = req.query.width || 1200;
   const height = req.query.height || 1200;
   const shape = req.query.shape || "circle";
@@ -51,6 +54,21 @@ app.get("/", (req, res) => {
     default:
       svgContent = generateCircleSVG(width, height);
   }
+
+  res.header("Content-Type", "image/svg+xml");
+  res.send(svgContent);
+});
+
+app.get("/initials", (req, res) => {
+  const width = 512;
+  const height = 512;
+  const initials = req.query.initials || "";
+
+  if (!initials) {
+    return res.status(400).send("Initials are required.");
+  }
+
+  const svgContent = generateInitialsProfileImageSVG(initials, width, height);
 
   res.header("Content-Type", "image/svg+xml");
   res.send(svgContent);

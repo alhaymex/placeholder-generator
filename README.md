@@ -65,6 +65,18 @@ Generates a placeholder image in PNG format.
 
 - A dynamically generated PNG image with a circular design.
 
+### `GET /initials`
+
+Generates a profile image using the initials PNG format.
+
+#### **Query Parameters:**
+
+- `initials` (required) - The initials to display in the profile image (e.g., "JS" or "AY").
+
+#### **Response:**
+
+- A dynamically generated 512 x 512 SVG image with a background color and initials centered in the image. The background color is randomly generated each time.
+
 ---
 
 ## **Example Requests**
@@ -84,4 +96,8 @@ Generates a placeholder image in PNG format.
 3. **Custom shapes (circle, square, diamond, triangle, grid, star, pentagon, hexagon, and wave):**
    ```
    https://image.alhaymex.com?shape=grid
+   ```
+4. **Generate a profile image with initials "AY":**
+   ```
+   https://image.alhaymex.com/initials?initials=ay
    ```
