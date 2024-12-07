@@ -10,7 +10,6 @@ A simple REST API for generating dynamic placeholder images. Perfect for filling
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
 - [Example Requests](#example-requests)
-- [License](#license)
 
 ---
 
@@ -81,8 +80,3 @@ Generates a placeholder image in PNG format.
    ```
 
 ---
-
-## **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-"
